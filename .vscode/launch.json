@@ -1,0 +1,29 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "ResgistryServiceApplication",
+            "request": "launch",
+            "mainClass": "com.buyonix.resgistryservice.ResgistryServiceApplication",
+            "projectName": ""
+        },
+        {
+            "type": "java",
+            "name": "ResgistryServiceApplication",
+            "request": "launch",
+            "mainClass": "com.buyonix.resgistryservice.ResgistryServiceApplication",
+            "projectName": "resgistry_service"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ResgistryServiceApplication<resgistry_service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.buyonix.resgistry_service.ResgistryServiceApplication",
+            "projectName": "resgistry_service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=51166 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=resgistry_service"
+        }
+    ]
+}

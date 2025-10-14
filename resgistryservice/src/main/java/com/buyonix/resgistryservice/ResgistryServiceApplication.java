@@ -1,6 +1,5 @@
 package com.buyonix.resgistryservice;
 
-
 /**
  * The entry point for the Buyonix Registry Service Spring Boot application.
  * <p>
