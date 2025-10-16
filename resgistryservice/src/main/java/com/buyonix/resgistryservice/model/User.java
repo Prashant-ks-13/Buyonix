@@ -14,12 +14,16 @@
  */
 package com.buyonix.resgistryservice.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class User {
 
+    @Id
     private String userid;
     private String username;
     private String email;
