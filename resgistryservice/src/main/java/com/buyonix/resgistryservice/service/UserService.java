@@ -5,8 +5,8 @@
  *
  * @author Prashant Kumar Singh
  * @version 1.0
- * @createdAt 2024-06-08
- * @updatedAt 2024-06-08
+ * @createdAt 2025-10-14
+ * @updatedAt 2025-10-17
  * @project Buyonix Registry Service
  * @company Buyonix.com
  * 
@@ -15,6 +15,9 @@
 package com.buyonix.resgistryservice.service;
 
 import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
 
 import com.buyonix.resgistryservice.model.User;
 
@@ -22,5 +25,10 @@ public interface UserService {
 
     User createUser(User user);
     List<User> getAllUsers();
+    void deleteUser(Long userId);
+    Optional<User> getUserById(Long userId);
+    
+    void deleteAllUsers();
+    User updateUser(Long id);
 
 }

@@ -14,8 +14,8 @@ package com.buyonix.resgistryservice;
  * @author Prashant Kumar Singh
  * @version 1.0
  * @since 2024-06-08
- * @createdAt 2024-06-08
- * @updatedAt 2024-06-08
+ * @createdAt 2025-10-14
+ * @updatedAt 2025-10-17
  * @project Buyonix Registry Service
  * @company Buyonix.com
  *
@@ -34,8 +34,7 @@ public class ResgistryServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ResgistryServiceApplication.class, args);
 
-		UserController userController = new UserController();
-		System.out.println(userController.hello());
+		
 	}
 
 }
