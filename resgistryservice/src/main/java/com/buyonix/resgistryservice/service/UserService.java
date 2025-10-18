@@ -17,8 +17,6 @@ package com.buyonix.resgistryservice.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.stereotype.Service;
-
 import com.buyonix.resgistryservice.model.User;
 
 public interface UserService {

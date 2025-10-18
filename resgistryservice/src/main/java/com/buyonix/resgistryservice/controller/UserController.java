@@ -83,7 +83,7 @@ public class UserController {
     }
 
     @GetMapping("/getUser/{id}")
-    public Optional<User> getUser(@RequestParam Long id) {
+    public Optional<User> getUser(@PathVariable Long id) {
         return userServiceImpl.getUserById(id);
     }
     
