@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.buyonix.resgistryservice.exceptions.CustomerNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,21 +58,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> getUserById(Long userId) {
         // TODO Auto-generated method stub
+        Optional<User> existingUser = userRepository.findById(userId);
+        if(!existingUser.isPresent()){
+            throw new  CustomerNotFoundException("User not found with id: " + userId);
+        }
         return userRepository.findById(userId);
     }
 
     @Override
-    public User updateUser(Long id) {
+    public User updateUser(User user , Long id) {
         // TODO Auto-generated method stub
         Optional<User> optionalUser = userRepository.findById(id);
         if (!optionalUser.isPresent()) {
-            throw new RuntimeException("User not found with id: " + id);
+            throw new CustomerNotFoundException("User not found with id: " + id);
         }else {
-            User existingUser = optionalUser.get();
+
             // Update fields of existingUser as needed
             // For example: existingUser.setName(user.getName());
-            userRepository.save(existingUser);
-            return existingUser;
+
+            userRepository.save(user);
+            return user;
         }
         
     }

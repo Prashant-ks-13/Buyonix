@@ -3,21 +3,19 @@
 package com.buyonix.resgistryservice.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.buyonix.resgistryservice.model.User;
 import com.buyonix.resgistryservice.service.UserServiceImpl;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 
 
@@ -65,8 +63,12 @@ public class UserController {
     @PutMapping("/update/{id}")
     public String updateUser(@PathVariable Long id, @RequestBody User user) {
         //TODO: process PUT request
-        userServiceImpl.updateUser(id);
-        return "User updated successfully";
+        try {
+            userServiceImpl.updateUser(user, id);
+            return "User updated successfully";
+        } catch (Exception e) {
+            return e.getMessage();
+        }
         
     }
 
@@ -83,8 +85,12 @@ public class UserController {
     }
 
     @GetMapping("/getUser/{id}")
-    public Optional<User> getUser(@PathVariable Long id) {
-        return userServiceImpl.getUserById(id);
+    public Object getUser(@PathVariable Long id) {
+        try {
+            return userServiceImpl.getUserById(id);
+        } catch (Exception e) {
+            return e.getMessage();
+        }
     }
     
     
