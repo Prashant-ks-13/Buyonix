@@ -4,6 +4,9 @@ package com.buyonix.resgistryservice.controller;
 
 import java.util.List;
 
+import com.buyonix.resgistryservice.dto.UserDTO;
+import com.buyonix.resgistryservice.response.UserResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,11 +51,11 @@ public class UserController {
     UserServiceImpl userServiceImpl;
 
     @PostMapping("/add")
-    public String addUser(@RequestBody User user) {
+    public UserResponse addUser(@Valid @RequestBody UserDTO user) {
         //TODO: process POST request
-        userServiceImpl.createUser(user);
+
         
-        return "User added successfully";
+        return userServiceImpl.createUser(user);
     }
 
     @GetMapping("/allUser")

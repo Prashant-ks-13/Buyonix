@@ -25,11 +25,10 @@ package com.buyonix.resgistryservice;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.buyonix.resgistryservice.controller.UserController;
-import com.buyonix.resgistryservice.model.User;
-
 @SpringBootApplication
 public class ResgistryServiceApplication {
+
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(ResgistryServiceApplication.class, args);

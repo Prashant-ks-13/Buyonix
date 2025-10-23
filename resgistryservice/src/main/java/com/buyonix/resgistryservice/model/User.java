@@ -14,17 +14,15 @@
  */
 package com.buyonix.resgistryservice.model;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
-import lombok.*;
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -34,6 +32,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.SEQUENCE, generator = "userid")
     @SequenceGenerator(name = "userid",sequenceName = "user_seq",allocationSize = 1)
+    @Column(updatable = false, nullable = false)
     private Long userid;
     @Column(nullable = false, unique = true)
     private String username;
@@ -46,8 +45,10 @@ public class User {
     private String gender;
     private String contactno;
     @CreationTimestamp
+    @Column(updatable = false)
     private String createdAt;
     @UpdateTimestamp
     private String updatedAt;
+
 
 }

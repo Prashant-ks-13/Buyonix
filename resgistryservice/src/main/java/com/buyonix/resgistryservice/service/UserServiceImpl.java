@@ -14,30 +14,35 @@
  */
 package com.buyonix.resgistryservice.service;
 
+import com.buyonix.resgistryservice.dto.UserDTO;
+import com.buyonix.resgistryservice.exceptions.CustomerNotFoundException;
+import com.buyonix.resgistryservice.mapper.UserMapper;
+import com.buyonix.resgistryservice.model.User;
+import com.buyonix.resgistryservice.repository.UserRepository;
+import com.buyonix.resgistryservice.response.UserResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import com.buyonix.resgistryservice.exceptions.CustomerNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.buyonix.resgistryservice.model.User;
-import com.buyonix.resgistryservice.repository.UserRepository;
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    
 
+    private final UserMapper modelMapper;
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
-    public User createUser(User user) {
+    public UserResponse createUser(UserDTO userDTO) {
         // Implementation for creating a user
+        User user = modelMapper.toEntity(userDTO);
         userRepository.save(user);
-        return user;
+        UserResponse userResponse = modelMapper.toResponse(user);
+        userResponse.setMessage("Welcome " + userDTO.getUsername()+" ,You have been registered successfully");
+        return userResponse;
     }
 
     @Override

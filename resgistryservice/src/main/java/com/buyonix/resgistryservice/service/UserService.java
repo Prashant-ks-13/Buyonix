@@ -17,11 +17,13 @@ package com.buyonix.resgistryservice.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.buyonix.resgistryservice.dto.UserDTO;
 import com.buyonix.resgistryservice.model.User;
+import com.buyonix.resgistryservice.response.UserResponse;
 
 public interface UserService {
 
-    User createUser(User user);
+    UserResponse createUser(UserDTO userDTO);
     List<User> getAllUsers();
     void deleteUser(Long userId);
     Optional<User> getUserById(Long userId);

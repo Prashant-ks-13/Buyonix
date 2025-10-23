@@ -10,9 +10,13 @@
         <module name="resgistry_service" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="productservice" target="21" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="productservice" options="-parameters" />
       <module name="resgistry_service" options="-parameters" />
     </option>
   </component>
