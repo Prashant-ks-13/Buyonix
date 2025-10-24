@@ -9,26 +9,30 @@
  * @updatedAt 2025-10-17
  * @project Buyonix Registry Service
  * @company Buyonix.com
- * 
+ * <p>
  * Copyright (c) 2024 Buyonix.com. All rights reserved.
  */
 package com.buyonix.resgistryservice.service;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.buyonix.resgistryservice.dto.UserDTO;
 import com.buyonix.resgistryservice.model.User;
+import com.buyonix.resgistryservice.response.APIResponse;
 import com.buyonix.resgistryservice.response.UserResponse;
+
+import java.util.List;
 
 public interface UserService {
 
-    UserResponse createUser(UserDTO userDTO);
-    List<User> getAllUsers();
-    void deleteUser(Long userId);
-    Optional<User> getUserById(Long userId);
-    
-    void deleteAllUsers();
-    User updateUser(User user,Long id);
+    UserResponse addUser(UserDTO userDTO);
+
+    List<UserDTO> getAllUsers();
+
+    APIResponse<Void> deleteUser(Long userId);
+
+    UserDTO getUserById(Long userId);
+
+    APIResponse<Void> deleteAllUsers();
+
+    UserResponse updateUser(UserDTO userDTO, Long id);
 
 }

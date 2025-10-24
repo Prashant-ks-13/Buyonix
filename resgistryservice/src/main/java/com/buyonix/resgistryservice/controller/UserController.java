@@ -5,9 +5,12 @@ package com.buyonix.resgistryservice.controller;
 import java.util.List;
 
 import com.buyonix.resgistryservice.dto.UserDTO;
+import com.buyonix.resgistryservice.response.APIResponse;
 import com.buyonix.resgistryservice.response.UserResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,8 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.buyonix.resgistryservice.model.User;
 import com.buyonix.resgistryservice.service.UserServiceImpl;
-
-
 
 
 /**
@@ -39,66 +40,62 @@ import com.buyonix.resgistryservice.service.UserServiceImpl;
  * @updatedAt 2025-10-17
  * @project Buyonix Registry Service
  * @company Buyonix.com
- *
  * @Copyright (c) 2024 Buyonix.com. All rights reserved.
  */
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
-	// Define user management endpoints here
+    // Define user management endpoints here
     @Autowired
     UserServiceImpl userServiceImpl;
 
+
     @PostMapping("/add")
-    public UserResponse addUser(@Valid @RequestBody UserDTO user) {
+    public ResponseEntity<UserResponse> addUser(@Valid @RequestBody UserDTO user) {
         //TODO: process POST request
 
-        
-        return userServiceImpl.createUser(user);
+        UserResponse userResponse = userServiceImpl.addUser(user);
+        return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
     }
+
 
     @GetMapping("/allUser")
-    public List<User> getAll() {
-        return userServiceImpl.getAllUsers();
+    public ResponseEntity<List<UserDTO>> getAll() {
+
+        return ResponseEntity.ok(userServiceImpl.getAllUsers());
     }
+
 
     @PutMapping("/update/{id}")
-    public String updateUser(@PathVariable Long id, @RequestBody User user) {
+    public ResponseEntity<UserResponse> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
         //TODO: process PUT request
-        try {
-            userServiceImpl.updateUser(user, id);
-            return "User updated successfully";
-        } catch (Exception e) {
-            return e.getMessage();
-        }
-        
+
+        UserResponse userResponse = userServiceImpl.updateUser(userDTO, id);
+        return new ResponseEntity<>(userResponse, HttpStatus.OK);
+
+
     }
 
+
     @DeleteMapping("/delete/{id}")
-    public String deleteUser(@PathVariable Long id) {
-        userServiceImpl.deleteUser(id);
-        return "User deleted successfully";
+    public ResponseEntity<APIResponse<Void>> deleteUser(@PathVariable Long id) {
+        APIResponse<Void> apiResponse = userServiceImpl.deleteUser(id);
+        return ResponseEntity.status(apiResponse.getStatusCode()).body(apiResponse);
     }
 
     @DeleteMapping("/deleteAll")
-    public String deleteAllUsers() {
-        userServiceImpl.deleteAllUsers();
-        return "All users deleted successfully";
+    public ResponseEntity<APIResponse> deleteAllUsers() {
+
+        return ResponseEntity.ok(userServiceImpl.deleteAllUsers());
     }
+
 
     @GetMapping("/getUser/{id}")
-    public Object getUser(@PathVariable Long id) {
-        try {
-            return userServiceImpl.getUserById(id);
-        } catch (Exception e) {
-            return e.getMessage();
-        }
+    public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
+        UserDTO userDTO = userServiceImpl.getUserById(id);
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
-    
-    
-    
-
 
 
 }
