@@ -19,11 +19,5 @@ public class ProductDTO {
     private boolean active;
     private String imageurl;
 
-    public String getName() {
-        return name;
-    }
 
-    public String getSku() {
-        return sku;
-    }
 }

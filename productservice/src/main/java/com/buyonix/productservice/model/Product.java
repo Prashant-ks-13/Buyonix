@@ -59,7 +59,5 @@ public class Product {
     @LastModifiedDate
     private Instant lastUpdated;
 
-    public String getName() {
-        return name;
-    }
+
 }

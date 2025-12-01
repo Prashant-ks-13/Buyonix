@@ -5,12 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class APIResponse<T> {
 
     private boolean success;
     private int statusCode;
     private String message;
     private T data;
+
+
 }
