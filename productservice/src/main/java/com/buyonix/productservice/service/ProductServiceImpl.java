@@ -1,9 +1,14 @@
 package com.buyonix.productservice.service;
 
 
+import com.buyonix.productservice.dto.ProductDTO;
+import com.buyonix.productservice.exceptions.DuplicateProductException;
 import com.buyonix.productservice.exceptions.ProductNotFoundException;
+import com.buyonix.productservice.mapper.ProductMapper;
 import com.buyonix.productservice.model.Product;
 import com.buyonix.productservice.repository.ProductRepository;
+import com.buyonix.productservice.response.ProductResponse;
+import com.mongodb.DuplicateKeyException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,13 +16,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
-
-    public ProductServiceImpl(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
+    private final ProductMapper productMapper;
 
     @Override
     public List<Product> getAll() {
@@ -25,8 +28,21 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product saveProduct(Product product) {
-        return productRepository.save(product);
+    public ProductResponse saveProduct(ProductDTO productDTO) {
+        if(productRepository.existsByNameAndSku(productDTO.getName(),productDTO.getSku())){
+            throw new DuplicateProductException("Product with name : "+productDTO.getName()+" and sku : "+productDTO.getSku()+" already exists.");
+        }
+        try {
+            Product product = productMapper.toProduct(productDTO);
+            productRepository.save(product);
+            ProductResponse productResponse = productMapper.toResponse(product);
+            productResponse.setMessage("Product " +product.getName()+" has been added to the DataBase");
+            return productResponse;
+        } catch (DuplicateKeyException ex) {
+            throw new DuplicateProductException("Product with name : "+productDTO.getName()+" and sku : "+productDTO.getSku()+" already exists.");
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
     }
 
     @Override

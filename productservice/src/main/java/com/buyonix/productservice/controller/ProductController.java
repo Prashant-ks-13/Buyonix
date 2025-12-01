@@ -1,8 +1,13 @@
 package com.buyonix.productservice.controller;
 
 
+import com.buyonix.productservice.dto.ProductDTO;
 import com.buyonix.productservice.model.Product;
+import com.buyonix.productservice.response.ProductResponse;
 import com.buyonix.productservice.service.ProductServiceImpl;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +23,10 @@ public class ProductController {
     private final ProductServiceImpl productService;
 
     @PostMapping("/addProduct")
-    private Product addProduct(@RequestBody Product product){
-        return productService.saveProduct(product);
+    private ResponseEntity<ProductResponse> addProduct(@Valid @RequestBody ProductDTO productDTO){
+
+        ProductResponse response = productService.saveProduct(productDTO);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping("/allProduct")

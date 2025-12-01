@@ -1,13 +1,12 @@
 package com.buyonix.productservice.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -16,6 +15,9 @@ import java.math.BigDecimal;
 import java.time.Instant;
 
 @Document(collection = "products")
+@CompoundIndexes({
+        @CompoundIndex(name = "name_sku_unique", def = "{'name': 1, 'sku': 1}", unique = true)
+})
 @Getter
 @Setter
 @NoArgsConstructor
@@ -56,4 +58,8 @@ public class Product {
 
     @LastModifiedDate
     private Instant lastUpdated;
+
+    public String getName() {
+        return name;
+    }
 }
