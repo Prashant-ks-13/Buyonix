@@ -1,40 +1,59 @@
 package com.buyonix.productservice.model;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 
-@Entity
+@Document(collection = "products")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "tbl_product",schema = "productdetails", uniqueConstraints =
-        {@UniqueConstraint(name = "sku_unique",columnNames = "sku")})
+@Builder
 public class Product {
 
+    /**
+     * Using String for id is convenient with Spring Data MongoDB.
+     * Mongo will store an ObjectId string here unless you explicitly set it.
+     */
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "product_sequence")
-    @SequenceGenerator(name = "product_sequence",sequenceName = "product_sequence_name",allocationSize = 1)
-    private Long id;
-    @Column(name = "product_name",nullable = false)
+    private String id;
+
+    @Field("product_name")
     private String name;
-    @Column(nullable = false)
+
+    /**
+     * Unique index on sku to mimic your unique constraint
+     */
+    @Indexed(name = "sku_unique", unique = true)
     private String sku;
-    @Column(name = "product_description",nullable = false)
+
+    @Field("product_description")
     private String description;
-    @Column(nullable = false)
+
     private BigDecimal price;
+
     private boolean active;
+
     private String imageurl;
 
-    @CreationTimestamp
-    private String created;
-    @UpdateTimestamp
-    private String lastupdated;
+    /**
+     * Use Instant for timestamps. Populate automatically via auditing.
+     */
+    @CreatedDate
+    private Instant created;
 
+    @LastModifiedDate
+    private Instant lastUpdated;
 }

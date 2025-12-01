@@ -28,7 +28,7 @@ public class ProductController {
     }
 
     @PutMapping("/updateProduct/{id}")
-    private Object updateProduct(@RequestBody Product product,@PathVariable Long id){
+    private Object updateProduct(@RequestBody Product product,@PathVariable String id){
         try {
             return productService.updateProduct(product,id);
         }catch (Exception e){

@@ -30,7 +30,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product updateProduct(Product product, Long prodid) {
+    public Product updateProduct(Product product, String prodid) {
         Optional<Product> existingProduct = productRepository.findById(prodid);
         if(!existingProduct.isPresent()){
             throw new ProductNotFoundException("No Product found with ID = "+prodid);

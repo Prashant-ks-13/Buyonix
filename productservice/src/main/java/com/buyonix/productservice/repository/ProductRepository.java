@@ -1,7 +1,11 @@
 package com.buyonix.productservice.repository;
 
 import com.buyonix.productservice.model.Product;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface ProductRepository extends JpaRepository<Product,Long> {
+import java.util.Optional;
+
+public interface ProductRepository extends MongoRepository<Product,String> {
+    Optional<Product> findBySku(String sku);
+    boolean existsBySku(String sku);
 }
